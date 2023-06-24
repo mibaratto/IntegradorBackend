@@ -33,6 +33,16 @@ export interface PostModel{
     }
 }
 
+export interface CommentDBWithCreatorName {
+    id: string,
+    postId: string,
+    content: string,
+    likes: number,
+    dislikes: number,
+    createdAt: string,
+    creatorName: string
+}
+
 export interface LikeDislikeDB {
     user_id: string,
     post_id: string,
@@ -161,5 +171,60 @@ export class Post {
             name: this.creatorName
           }
         }
+    }
+}
+
+export class Comment {
+    constructor(
+        private id: string,
+        private postId: string,
+        private content: string,
+        private likes: number,
+        private dislikes: number,
+        private createdAt: string,
+        private creatorName: string
+    ){}
+
+    public getId(): string {
+        return this.id
+    }
+
+    public getPostId(): string {
+        return this.postId
+    }
+
+    public getContent(): string {
+        return this.content
+    }
+
+    public getLikes(): number {
+        return this.likes
+    }
+
+    public getDislikes(): number {
+        return this.dislikes
+    }
+
+    public getCreatedAt(): string {
+        return this.createdAt
+    }
+
+    public getCreatorName(): string {
+        return this.creatorName
+    }
+
+}
+
+export class PostWithComments {
+    constructor(
+        private post: Post,
+        private comments: Comment[]
+    ){}
+
+    public getPost(): Post {
+        return this.post
+    }
+    public getComments(): Comment[] {
+        return this.comments
     }
 }
