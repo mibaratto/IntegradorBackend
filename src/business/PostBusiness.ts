@@ -1,4 +1,5 @@
 import { PostDatabase } from "../database/PostDatabase";
+import { CreateCommentInputDTO, CreateCommentOutputDTO } from "../dtos/post/createComment.dto";
 import { CreatePostInputDTO, CreatePostOutputDTO } from "../dtos/post/createPost.dto";
 import { DeletePostInputDTO, DeletePostOutputDTO } from "../dtos/post/deletePost.dto";
 import { EditPostInputDTO, EditPostOutputDTO } from "../dtos/post/editPost.dto";
@@ -8,7 +9,7 @@ import { LikeOrDislikePostInputDTO, LikeOrDislikePostOutputDTO } from "../dtos/p
 import { ForbiddenError } from "../errors/ForbiddenError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { UnauthorizedError } from "../errors/UnauthorizedError";
-import { LikeDislikeDB, POST_LIKE, Post, Comment, PostWithComments } from "../models/Post";
+import { LikeDislikeDB, POST_LIKE, Post, Comment, PostWithComments, CommentDB } from "../models/Post";
 import { USER_ROLES } from "../models/User";
 import { IdGenerator } from "../services/IdGenerator";
 import { TokenManager } from "../services/TokenManager";
@@ -47,6 +48,46 @@ export class PostBusiness {
         await this.postDatabase.insertPost(postDB)
 
         const output: CreatePostOutputDTO = undefined
+        return output
+    }
+
+    public createComment = async (input:CreateCommentInputDTO): Promise<CreateCommentOutputDTO> => {
+
+        const { postId, content, token } = input
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if (!payload) {
+            throw new UnauthorizedError()
+        }
+
+        const postDB = await this.postDatabase.findPostById(postId)
+
+        if (!postDB) {
+            throw new NotFoundError("Post with this id does not exist")
+        }
+
+        const commentId = this.idGenerator.generate()
+
+        const commentDB = {
+            id: commentId,
+            post_id: postId,
+            content,
+            likes: 0,
+            dislikes: 0,
+            created_at: new Date().toISOString(),
+            creator_id: payload.id
+        }
+
+        console.log("DEBUG createComment payload: ", JSON.stringify(payload))
+        console.log("DEBUG createComment id: ", commentId)
+        console.log("DEBUG createComment postId: ", postId)
+        console.log("DEBUG createComment content: ", content)
+        console.log("DEBUG createComment creator_id: ", payload.id)
+
+        await this.postDatabase.insertComment(commentDB)
+
+        const output: CreateCommentOutputDTO = undefined
         return output
     }
 
@@ -233,7 +274,7 @@ export class PostBusiness {
             await this.postDatabase.findPostWithCreatorNameById(postId)
 
         if (!postDBWithCreatorName) {
-            throw new NotFoundError("Post com essa id não existe")
+            throw new NotFoundError("Post with this id does not exist")
         }
 
         const post = new Post(

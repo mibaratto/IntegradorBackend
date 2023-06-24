@@ -1,4 +1,4 @@
-import { CommentDBWithCreatorName, LikeDislikeDB, POST_LIKE, PostDB, PostDBWithCreatorName } from "../models/Post";
+import { CommentDB, CommentDBWithCreatorName, LikeDislikeDB, POST_LIKE, PostDB, PostDBWithCreatorName } from "../models/Post";
 import { BaseDatabase } from "./BaseDatabase";
 import { UserDatabase } from "./UserDatabase";
 
@@ -15,6 +15,13 @@ export class PostDatabase extends BaseDatabase {
             .insert(postDB)
     }
 
+    public insertComment = async (
+        commentDB: CommentDB
+    ): Promise<void> => {
+        await BaseDatabase
+            .connection(PostDatabase.TABLE_COMMENTS)
+            .insert(commentDB)
+    }
 
     public getPostsWithCreatorName = async (): Promise<PostDBWithCreatorName[]> => {
 

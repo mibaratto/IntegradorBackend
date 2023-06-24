@@ -43,6 +43,16 @@ export interface CommentDBWithCreatorName {
     creatorName: string
 }
 
+export interface CommentDB {
+    id: string,
+    post_id: string,
+    content: string,
+    likes: number,
+    dislikes: number,
+    created_at: string,
+    creator_id: string
+}
+
 export interface LikeDislikeDB {
     user_id: string,
     post_id: string,

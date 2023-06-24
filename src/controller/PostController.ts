@@ -8,6 +8,7 @@ import { EditPostSchema } from "../dtos/post/editPost.dto";
 import { DeletePostSchema } from "../dtos/post/deletePost.dto";
 import { LikeOrDislikePostSchema } from "../dtos/post/likeOrDislikePost.dto";
 import { GetPostByIdSchema } from "../dtos/post/getPostById.dto";
+import { CreateCommentSchema } from "../dtos/post/createComment.dto";
 
 export class PostController {
     constructor(
@@ -22,6 +23,31 @@ export class PostController {
             })
 
             const output = await this.postBusiness.createPost(input)
+            res.status(201).send(output)
+
+        } catch (error) {
+            console.log(error)
+
+            if (error instanceof ZodError) {
+                res.status(400).send(error.issues)
+            } else if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("unexpected error")
+            }
+
+        }
+    }
+    
+    public createComment = async (req: Request, res: Response) => {
+        try {
+            const input = CreateCommentSchema.parse({
+                token: req.headers.authorization,
+                content: req.body.content,
+                postId: req.params.id
+            })
+
+            const output = await this.postBusiness.createComment(input)
             res.status(201).send(output)
 
         } catch (error) {
