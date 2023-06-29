@@ -79,12 +79,6 @@ export class PostBusiness {
             creator_id: payload.id
         }
 
-        console.log("DEBUG createComment payload: ", JSON.stringify(payload))
-        console.log("DEBUG createComment id: ", commentId)
-        console.log("DEBUG createComment postId: ", postId)
-        console.log("DEBUG createComment content: ", content)
-        console.log("DEBUG createComment creator_id: ", payload.id)
-
         await this.postDatabase.insertComment(commentDB)
 
         const output: CreateCommentOutputDTO = undefined
