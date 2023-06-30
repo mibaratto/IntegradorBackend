@@ -57,21 +57,24 @@ CREATE TABLE
 INSERT INTO
     users (id, name, email, password, role)
 VALUES
-    -- tipo NORMAL e senha = fulano123 (
+    -- tipo NORMAL e senha = fulano123 
+    (
         'u001',
         'Fulano',
         'fulano@email.com',
         '$2a$12$qPQj5Lm1dQK2auALLTC0dOWedtr/Th.aSFf3.pdK5jCmYelFrYadC',
         'NORMAL'
     ),
-    -- tipo NORMAL e senha = beltrana00 (
+    -- tipo NORMAL e senha = beltrana00 
+    (
         'u002',
         'Beltrana',
         'beltrana@email.com',
         '$2a$12$403HVkfVSUbDioyciv9IC.oBlgMqudbnQL8ubebJIXScNs8E3jYe2',
         'NORMAL'
     ),
-    -- tipo ADMIN e senha = astrodev99 (
+    -- tipo ADMIN e senha = astrodev99 
+    (
         'u003',
         'Astrodev',
         'astrodev@email.com',
