@@ -17,6 +17,9 @@ The project is a back-end application made during the Labenu bootcamp. The main 
  - User is allowed to delete a post from their own account
  - User is allowed to like and dislike posts by other users
 
+## DB Diagram
+![LabEddit DB](https://github.com/mibaratto/IntegradorBackend/assets/15133580/186a8935-91cd-4af7-b7e5-3eed83b3cc56)
+
 
 ## Link to postman documentation
 https://documenter.getpostman.com/view/25826635/2s93zB62RN
