@@ -6,9 +6,6 @@ LabEddit is a social media to promote connection and interaction between users. 
 ## Participants
 Michelle Lang Baratto
 
-## Status
-Doing
-
 ## Goals
 The project is a back-end application made during the Labenu bootcamp. The main goal it is to review concepts like NodeJS, Typescript, Express, SQL, Knex, POO, Layered architecture, unique ids, Hashes, authentication, authorisations, routing, Postman. 
 
